@@ -1,0 +1,11 @@
+.grid{
+  height: 90%;
+  background-color: #78bcc4;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gridItem{
+  border: 1px solid black;
+  box-sizing: border-box
+}

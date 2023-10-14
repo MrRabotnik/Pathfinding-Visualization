@@ -1,0 +1,37 @@
+.header {
+  height: 10%;
+  background-color: #002c3e;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.algorithmsSelect{
+  padding: 0.5vw 1vw;
+  width: 10%;
+}
+
+.sizeSelect{
+  padding: 0.5vw 1vw;
+}
+
+.visualizeBtn{
+  padding: 0.5vw 1vw;
+  font-size: 1.5vw;
+  background-color: green;
+  color: white;
+
+  &:hover{
+    background-color: darkgreen;
+  }
+}
+
+.clearBtn{
+  padding: 0.5vw 1vw;
+}
+
+#speedRange {
+  width: 15%;
+  direction: rtl;
+}
+
