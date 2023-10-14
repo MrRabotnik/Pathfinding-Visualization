@@ -8,19 +8,20 @@ function App() {
 
   const changeRange = (val) => {
     setRangeVal(val)
+    console.log(algorithm)
   }
 
   const changeAlgorithm = (val) => {
     setAlgorithm(val)
   }
 
-  const clear = () => {
+  // const clear = () => {
 
-  }
+  // }
 
-  const visualize = () => {
+  // const visualize = () => {
 
-  }
+  // }
 
   return (
     <div className="App">
