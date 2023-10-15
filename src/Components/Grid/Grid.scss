@@ -1,20 +1,32 @@
-.grid{
+.grid {
   height: 90%;
   background-color: #78bcc4;
   display: flex;
   flex-wrap: wrap;
 }
 
-.gridItem{
+.gridItem {
   border: 1px solid black;
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
-.pickedUpItem{
-  width: 15%;
-  height: 25%;
+.pickedUpItem {
+  width: 8%;
+  height: 15%;
   visibility: hidden;
   position: absolute;
-  transform: translate(-50%, 10%);
+  transform: translate(-50%, 30%);
   background-size: 100% 100%;
+}
+
+@keyframes pickedUpNode {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }

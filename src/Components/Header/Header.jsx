@@ -1,6 +1,6 @@
 import "./Header.scss"
 
-function Header({ changeRange, changeAlgorithm, clear, visualize }) {
+function Header({ changeRange, changeAlgorithm, clear, visualize, generateNewGridWithMaze }) {
   return (
     <header className="header">
       <select className="algorithmsSelect" name="Algorithms" defaultValue={"Algorithms"} onChange={(e) => changeAlgorithm(e.target.value)}>
@@ -21,11 +21,10 @@ function Header({ changeRange, changeAlgorithm, clear, visualize }) {
         <option value="800">40x20</option>
         <option value="1250">50x25</option>
         <option value="1800">60x30</option>
-        <option value="2450">70x35</option>
-        <option value="3200">80x40</option>
       </select>
       {/* <input type="range" min={18} max={750} step={20}  /> */}
       <button className="visualizeBtn" onClick={visualize}>Visualize</button>
+      <button className="generateBtn" onClick={generateNewGridWithMaze}>Generate</button>
       <button className="clearBtn" onClick={clear}>Clear</button>
       <input id="speedRange" type="range" min={20} max={500} />
     </header>

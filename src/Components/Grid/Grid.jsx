@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Grid.scss"
 import panda from "../../assets/panda.png"
 import bamboo from "../../assets/bamboo.png"
 
-function Grid({ rangeVal }) {
+function Grid({ rangeVal, generate }) {
     const [gridItems, setGridItems] = useState([])
     const [boxWidth, setBoxWidth] = useState(10)
     const [boxHeight, setBoxHeight] = useState(5)
@@ -16,25 +16,80 @@ function Grid({ rangeVal }) {
     const [visibility, setVisibility] = useState("hidden")
     const [movingNodeImage, setMovingNodeImage] = useState("")
 
-    const initGrid = useCallback(() => {
+    const generateMaze = () => {
+        const maze = [];
+
+        for (let col = 0; col < boxHeight; col++) {
+            maze[col] = [];
+            for (let row = 0; row < boxWidth; row++) {
+                maze[col][row] = 0;
+            }
+        }
+
+        // Generate random walls in the maze
+        for (let col = 1; col < boxHeight - 1; col += 2) {
+            for (let row = 1; row < boxWidth - 1; row += 2) {
+                maze[col][row] = 1; // Set the cell as a wall
+
+                // Randomly break walls to create passages
+                if (col > 1 && Math.random() < 0.5) {
+                    maze[col - 1][row] = 1; // Break the wall above
+                }
+
+                if (row < boxWidth - 2 && Math.random() < 0.5) {
+                    maze[col][row + 1] = 1; // Break the wall to the right
+                }
+            }
+        }
+
         const arr = []
-        const walls = [6, 11, 12, 13, 16, 18, 21, 23, 26, 28, 31, 33, 36, 37, 38, 43]
+        let count = 0
+        for (let i = 0; i < boxHeight; i++) {
+            for (let j = 0; j < boxWidth; j++) {
+                if (maze[i][j]) {
+                    arr.push(count)
+                }
+                count++
+            }
+        }
+        return arr
+    }
+
+    const randomStartingPos = (maze) => {
+        let startingPos = boxWidth * Math.ceil((boxHeight / 2 - 1)) + Math.floor(boxWidth / 4)
+        let endingPos = boxWidth * Math.ceil((boxHeight / 2 - 1)) + Math.floor(boxWidth / 4 * 3)
+        while(maze.includes(startingPos)){
+            startingPos = Math.floor(Math.random() * (rangeVal - 1))
+        }
+
+        while(maze.includes(endingPos) || startingPos === endingPos){
+           endingPos = Math.floor(Math.random() * (rangeVal - 1))
+        }
+
+        return [startingPos, endingPos]
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const initGrid = () => {
+        const arr = []
+        const maze = generateMaze()
+        const pos = randomStartingPos(maze)
+        // const walls = [6, 11, 12, 13, 16, 18, 21, 23, 26, 28, 31, 33, 36, 37, 38, 43]
         setBoxWidth(Math.floor(Math.sqrt(rangeVal / 2)) * 2)
         setBoxHeight(Math.floor(Math.sqrt(rangeVal / 2)))
-        const startingPos = boxWidth * Math.ceil((boxHeight / 2 - 1)) + Math.floor(boxWidth / 4)
-        const endingPos = boxWidth * Math.ceil((boxHeight / 2 - 1)) + Math.floor(boxWidth / 4 * 3)
-        setStartNodePos(startingPos)
-        setEndNodePos(endingPos)
+
+        setStartNodePos(pos[0])
+        setEndNodePos(pos[1])
         for (let i = 0; i < rangeVal; i++) {
             arr.push({
                 "id": i,
-                "start": i === startingPos ? true : false,
-                "end": i === endingPos ? true : false,
-                "wall": walls.includes(i) ? true : false
+                "start": i === pos[0] ? true : false,
+                "end": i === pos[1] ? true : false,
+                "wall": maze.includes(i) ? true : false
             })
         }
         setGridItems(arr)
-    }, [boxHeight, boxWidth, rangeVal])
+    }
 
     const mouseDownOnBox = (e, box) => {
         e.preventDefault();
@@ -151,7 +206,8 @@ function Grid({ rangeVal }) {
 
     useEffect(() => {
         initGrid()
-    }, [initGrid])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [rangeVal, generate, boxHeight, boxWidth])
 
     return (
         <div className="grid">
@@ -160,6 +216,7 @@ function Grid({ rangeVal }) {
                 top: `${mouseY}px`,
                 visibility: `${visibility}`,
                 backgroundImage: `URL(${movingNodeImage})`,
+                animation: `${startPickedUp || endPickedUp ? "pickedUpNode 1s infinite" : ""}`
             }}></div>
             {
                 gridItems && gridItems.map((box, index) => {
