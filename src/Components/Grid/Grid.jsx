@@ -15,6 +15,8 @@ function Grid({ rangeVal, generate }) {
     const [mouseY, setMouseY] = useState(0)
     const [visibility, setVisibility] = useState("hidden")
     const [movingNodeImage, setMovingNodeImage] = useState("")
+    const [mouseDown, setMouseDown] = useState(false)
+    const [removeWall, setRemoveWall] = useState(false)
 
     const generateMaze = () => {
         const maze = [];
@@ -58,12 +60,12 @@ function Grid({ rangeVal, generate }) {
     const randomStartingPos = (maze) => {
         let startingPos = boxWidth * Math.ceil((boxHeight / 2 - 1)) + Math.floor(boxWidth / 4)
         let endingPos = boxWidth * Math.ceil((boxHeight / 2 - 1)) + Math.floor(boxWidth / 4 * 3)
-        while(maze.includes(startingPos)){
+        while (maze.includes(startingPos)) {
             startingPos = Math.floor(Math.random() * (rangeVal - 1))
         }
 
-        while(maze.includes(endingPos) || startingPos === endingPos){
-           endingPos = Math.floor(Math.random() * (rangeVal - 1))
+        while (maze.includes(endingPos) || startingPos === endingPos) {
+            endingPos = Math.floor(Math.random() * (rangeVal - 1))
         }
 
         return [startingPos, endingPos]
@@ -91,11 +93,44 @@ function Grid({ rangeVal, generate }) {
         setGridItems(arr)
     }
 
+    const updateGridWalls = (box, remove) => {
+        if (remove) {
+            const arr = gridItems.map(item => {
+                if (!item.start && !item.end && item.id === box.id) {
+                    if (item.wall) {
+                        return {
+                            ...item,
+                            "wall": false
+                        }
+                    }
+                }
+                return item
+            })
+            setGridItems(arr)
+        } else {
+            const arr = gridItems.map(item => {
+                if (!item.start && !item.end && item.id === box.id) {
+                    if (!item.wall) {
+                        return {
+                            ...item,
+                            "wall": true
+                        }
+                    }
+                }
+                return item
+            })
+            setGridItems(arr)
+        }
+    }
+
     const mouseDownOnBox = (e, box) => {
         e.preventDefault();
+        setMouseDown(true)
         setMouseX(e.clientX)
         setMouseY(e.clientY)
         setVisibility("visible")
+        if (box.wall) setRemoveWall(true);
+        else setRemoveWall(false);
         if (box.start) {
             setStartPickedUp(true)
             setMovingNodeImage(panda)
@@ -104,10 +139,13 @@ function Grid({ rangeVal, generate }) {
             setEndPickedUp(true)
             setMovingNodeImage(bamboo)
         }
-        else return
+        else {
+            updateGridWalls(box, box.wall)
+        }
     }
 
     const mouseUpOnBox = (box) => {
+        setMouseDown(false)
         if (box.wall) {
             checkIfThereIsAWallOnMouseDown(startPickedUp, endPickedUp)
             return
@@ -184,10 +222,17 @@ function Grid({ rangeVal, generate }) {
         setMovingNodeImage(null)
     }
 
-    const moveMouse = (e) => {
+    const moveMouse = (e, box) => {
         if (startPickedUp || endPickedUp) {
             setMouseX(e.clientX)
             setMouseY(e.clientY)
+        }
+    }
+
+
+    const moveOnBoxes = (box) => {
+        if (mouseDown && !startPickedUp && !endPickedUp) {
+            updateGridWalls(box, removeWall)
         }
     }
 
@@ -232,7 +277,8 @@ function Grid({ rangeVal, generate }) {
                         }}
                         onMouseDown={(e) => { mouseDownOnBox(e, box) }}
                         onMouseUp={() => { mouseUpOnBox(box) }}
-                        onMouseMove={(e) => { moveMouse(e) }}
+                        onMouseMove={(e) => { moveMouse(e, box) }}
+                        onMouseEnter={() => { moveOnBoxes(box) }}
                     ></div>
                 })
             }
