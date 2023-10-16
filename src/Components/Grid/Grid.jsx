@@ -266,7 +266,7 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
                             height: `${100 / boxHeight}%`,
                             backgroundImage: `URL(${box.start && !startPickedUp ? panda : box.end && !endPickedUp ? bamboo : ""})`,
                             backgroundColor: box.wall ? "black" : box.end || box.path ? "green" : box.visited ? "wheat" : "transparent",
-                            border: `1px solid ${box.wall ? "transparent" : "black"}`,
+                            border: `1px solid ${box.wall ? "white" : "transparent"}`,
                         }}
                         onMouseDown={(e) => { mouseDownOnBox(e, box) }}
                         onMouseUp={() => { mouseUpOnBox(box) }}

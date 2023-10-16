@@ -5,6 +5,7 @@ import Graph from "./algorithms/dijkstras";
 
 function App() {
     const [rangeVal, setRangeVal] = useState(50)
+    const [animationSpeed, setAnimationSpeed] = useState(0)
     const [generate, setGenerate] = useState(0)
     const [algorithm, setAlgorithm] = useState("Dij")
     const [djakstrasStartingEndingNode, setDjakstrasStartingEndingNode] = useState([])
@@ -13,6 +14,13 @@ function App() {
 
     const changeRange = (val) => {
         setRangeVal(val)
+    }
+
+    const changeSpeed = (val) => {
+        if(val === "fast") setAnimationSpeed(0)
+        else if(val === "middle") setAnimationSpeed(50)
+        else if(val === "slow") setAnimationSpeed(100)
+        
     }
 
     const changeAlgorithm = (val) => {
@@ -30,7 +38,7 @@ function App() {
         }))
     }
 
-    const visualize = useCallback(() => {
+    const visualize = useCallback(async () => {
         if (visualizing) return
         switch (algorithm) {
             case "Dij":
@@ -61,7 +69,7 @@ function App() {
                 let index = 0
                 const arr = []
 
-                const x = setInterval(() => {
+                const draw = async () => {
                     arr.push(Array.from(visited)[index])
                     setVisualizing(true)
                     setGridItems(gridItems.map(item => {
@@ -87,12 +95,17 @@ function App() {
                         }
                     }))
                     index++
+                }
 
-                    if (Array.from(visited)[index] === undefined) {
-                        clearInterval(x)
-                        setVisualizing(false)
-                    }
-                }, 100)
+                const delay = ms => new Promise(
+                    resolve => setTimeout(resolve, ms)
+                );
+
+                while (Array.from(visited)[index] !== undefined) {
+                    await delay(animationSpeed)
+                    draw()
+                }
+                setVisualizing(false)
 
                 break;
 
@@ -129,7 +142,7 @@ function App() {
                 break;
         }
 
-    }, [gridItems, algorithm, rangeVal, djakstrasStartingEndingNode, visualizing])
+    }, [gridItems, algorithm, rangeVal, djakstrasStartingEndingNode, visualizing, animationSpeed])
 
     const generateNewGridWithMaze = () => {
         setGenerate(generate + 1)
@@ -139,6 +152,7 @@ function App() {
         <div className="App">
             <Header
                 changeRange={changeRange}
+                changeSpeed={changeSpeed}
                 changeAlgorithm={changeAlgorithm}
                 clearWalls={clearWalls}
                 visualize={visualize}
