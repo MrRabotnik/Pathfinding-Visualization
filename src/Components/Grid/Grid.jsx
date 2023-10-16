@@ -3,8 +3,7 @@ import "./Grid.scss"
 import panda from "../../assets/panda.png"
 import bamboo from "../../assets/bamboo.png"
 
-function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode }) {
-    const [gridItems, setGridItems] = useState([])
+function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, setGridItems, visualize }) {
     const [boxWidth, setBoxWidth] = useState(10)
     const [boxHeight, setBoxHeight] = useState(5)
     const [startNodePos, setStartNodePos] = useState(null)
@@ -88,14 +87,15 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode }) {
                 "id": i,
                 "start": i === pos[0] ? true : false,
                 "end": i === pos[1] ? true : false,
-                "wall": maze.includes(i) ? true : false
+                "wall": maze.includes(i) ? true : false,
+                "path": false
             })
         }
         setGridItems(arr)
     }
 
     const updateGridWalls = (box, remove) => {
-        if(startPickedUp || endPickedUp) return
+        if (startPickedUp || endPickedUp) return
         if (remove) {
             const arr = gridItems.map(item => {
                 if (!item.start && !item.end && item.id === box.id) {
@@ -152,10 +152,13 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode }) {
             checkIfThereIsAWallOnMouseDown(startPickedUp, endPickedUp)
             return
         }
+        let changeStartPos = startNodePos
+        let changeEndPos = endNodePos
         if (startPickedUp) {
             const arr = gridItems.map(item => {
                 if (!item.end && item.id === box.id) {
                     setStartNodePos(item.id)
+                    changeStartPos = item.id
                     return {
                         ...item,
                         "start": true
@@ -171,6 +174,7 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode }) {
             const arr = gridItems.map(item => {
                 if (!item.start && item.id === box.id) {
                     setEndNodePos(item.id)
+                    changeEndPos = item.id
                     return {
                         ...item,
                         "end": true
@@ -186,6 +190,8 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode }) {
         setStartPickedUp(false)
         setEndPickedUp(false)
         setMovingNodeImage(null)
+        setDjakstrasStartingEndingNode([changeStartPos, changeEndPos])
+        visualize()
     }
 
     const checkIfThereIsAWallOnMouseDown = (startPickedUp, endPickedUp) => {
@@ -231,25 +237,11 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode }) {
         }
     }
 
-
     const moveOnBoxes = (box) => {
         if (mouseDown) {
             updateGridWalls(box, removeWall)
         }
     }
-
-    // const changeWalls = (e, box) => {
-    //     const arr = gridItems.map(item => {
-    //         if (!item.start && !item.start && item.id === box.id) {
-    //             if (box.wall) return { ...item, "wall": false }
-    //             else return { ...item, "wall": true }
-    //         }
-    //         return item
-    //     })
-
-    //     setGridItems(arr)
-    // }
-
 
     useEffect(() => {
         initGrid()
@@ -273,8 +265,8 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode }) {
                             width: `${100 / boxWidth}%`,
                             height: `${100 / boxHeight}%`,
                             backgroundImage: `URL(${box.start && !startPickedUp ? panda : box.end && !endPickedUp ? bamboo : ""})`,
-                            backgroundColor: box.wall ? "black" : box.start ? "lime" : box.end ? "blue" : "transparent",
-                            // border: `1px solid ${box.wall ? "white" : "black"}`
+                            backgroundColor: box.wall ? "black" : box.end || box.path ? "green" : "transparent",
+                            border: `1px solid ${box.wall ? "transparent" : "black"}`,
                         }}
                         onMouseDown={(e) => { mouseDownOnBox(e, box) }}
                         onMouseUp={() => { mouseUpOnBox(box) }}

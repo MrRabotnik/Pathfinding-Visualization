@@ -1,6 +1,6 @@
 import "./Header.scss"
 
-function Header({ changeRange, changeAlgorithm, clear, visualize, generateNewGridWithMaze }) {
+function Header({ changeRange, changeAlgorithm, clearWalls, visualize, generateNewGridWithMaze }) {
   return (
     <header className="header">
       <select className="algorithmsSelect" name="Algorithms" defaultValue={"Algorithms"} onChange={(e) => changeAlgorithm(e.target.value)}>
@@ -25,7 +25,7 @@ function Header({ changeRange, changeAlgorithm, clear, visualize, generateNewGri
       {/* <input type="range" min={18} max={750} step={20}  /> */}
       <button className="visualizeBtn" onClick={visualize}>Visualize</button>
       <button className="generateBtn" onClick={generateNewGridWithMaze}>Generate</button>
-      <button className="clearBtn" onClick={clear}>Clear</button>
+      <button className="clearBtn" onClick={clearWalls}>Clear</button>
       <input id="speedRange" type="range" min={20} max={500} />
     </header>
   );

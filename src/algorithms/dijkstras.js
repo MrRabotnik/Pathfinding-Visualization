@@ -2,6 +2,11 @@ export default class Graph {
     constructor() {
         this.vertices = [];
         this.adjacencyList = {};
+        this.parents = {};
+        this.distances = {};
+        this.visited = new Set();
+        this.path = []
+        this.end = null
     }
 
     addVertex(vertex) {
@@ -30,36 +35,54 @@ export default class Graph {
         return minVertex;
     }
 
-    dijkstrasAlgorithm = (source) => {
-        let distances = {},
-            parents = {},
-            visited = new Set();
+    dijkstrasAlgorithm = ([start, end]) => {
+        this.end = end
         for (let i = 0; i < this.vertices.length; i++) {
-            if (this.vertices[i] === source) {
-                distances[source] = 0;
+            if (this.vertices[i] === start) {
+                this.distances[start] = 0;
             } else {
-                distances[this.vertices[i]] = Infinity;
+                this.distances[this.vertices[i]] = Infinity;
             }
-            parents[this.vertices[i]] = null;
+            this.parents[this.vertices[i]] = null;
         }
-    
-        let currVertex = this.vertexWithMinDistance(distances, visited);
-    
+
+        let currVertex = this.vertexWithMinDistance(this.distances, this.visited);
+
         while (currVertex !== null) {
-            let distance = distances[currVertex],
+            if (currVertex === end) break
+            let distance = this.distances[currVertex],
                 neighbors = this.adjacencyList[currVertex];
             for (let neighbor in neighbors) {
                 let newDistance = distance + neighbors[neighbor];
-                if (distances[neighbor] > newDistance) {
-                    distances[neighbor] = newDistance;
-                    parents[neighbor] = currVertex;
+                if (this.distances[neighbor] > newDistance) {
+                    this.distances[neighbor] = newDistance;
+                    this.parents[neighbor] = currVertex;
                 }
             }
-            visited.add(currVertex);
-            currVertex = this.vertexWithMinDistance(distances, visited);
+            this.visited.add(currVertex);
+            currVertex = this.vertexWithMinDistance(this.distances, this.visited);
         }
-    
-        console.log(parents);
-        console.log(distances);
+
+        // console.log("Parents")
+        // console.log(this.parents);
+
+        // console.log("Distances")
+        // console.log(this.distances);
+
+        // console.log("Visited")
+        // console.log(this.visited);
+
+        // console.log("Adjacent List")
+        // console.log(this.adjacencyList);
+    }
+
+    drawShortestPath = () => {
+        let currentNode = this.end
+        while (this.parents[currentNode] !== null) {
+            this.path.push(+currentNode)
+            currentNode = this.parents[currentNode]
+        }
+        this.path.push(+currentNode)
+        return this.path
     }
 }
