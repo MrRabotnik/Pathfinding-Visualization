@@ -11,7 +11,7 @@ import Graph from "./algorithms/dijkstras";
 
 function App() {
     const [rangeVal, setRangeVal] = useState(450)
-    const [animationSpeed, setAnimationSpeed] = useState(0)
+    const [animationSpeed, setAnimationSpeed] = useState(10)
     const [generate, setGenerate] = useState(0)
     const [algorithm, setAlgorithm] = useState("Dij")
     const [djakstrasStartingEndingNode, setDjakstrasStartingEndingNode] = useState([])
@@ -23,7 +23,7 @@ function App() {
     }
 
     const changeSpeed = (val) => {
-        if (val === "fast") setAnimationSpeed(0)
+        if (val === "fast") setAnimationSpeed(10)
         else if (val === "middle") setAnimationSpeed(50)
         else if (val === "slow") setAnimationSpeed(100)
 
@@ -75,12 +75,51 @@ function App() {
                 let index = 0
                 const arr = []
                 let array = gridItems
+                let tmpVisited = visited.values()
+
+                // const draw = async () => {
+                //     arr.push(Array.from(visited)[index])
+                //     setVisualizing(true)
+                //     array = array.map(item => {
+                //         if (arr.includes("" + item.id)) {
+                //             if (path.includes(item.id)) {
+                //                 return {
+                //                     ...item,
+                //                     "path": true,
+                //                     "visited": true
+                //                 }
+                //             }
+                //             return {
+                //                 ...item,
+                //                 "visited": true,
+                //                 "path": false
+                //             }
+                //         }
+                //         return {
+                //             ...item,
+                //             "path": false,
+                //             "visited": false
+                //         }
+                //     })
+                //     index++
+                //     setGridItems(array)
+                // }
+
+                // const delay = ms => new Promise(
+                //     resolve => setTimeout(resolve, ms)
+                // );
+
+                // while (Array.from(visited)[index] !== undefined) {
+                //     await delay(animationSpeed)
+                //     draw()
+                // }
 
                 const draw = async () => {
-                    arr.push(Array.from(visited)[index])
                     setVisualizing(true)
+                    const currentNodeVisited = Number(tmpVisited.next().value) // id of current visited node
+
                     array = array.map(item => {
-                        if (arr.includes("" + item.id)) {
+                        if (currentNodeVisited === item.id) {
                             if (path.includes(item.id)) {
                                 return {
                                     ...item,
@@ -94,12 +133,9 @@ function App() {
                                 "path": false
                             }
                         }
-                        return {
-                            ...item,
-                            "path": false,
-                            "visited": false
-                        }
+                        return item
                     })
+
                     index++
                     setGridItems(array)
                 }
@@ -108,7 +144,8 @@ function App() {
                     resolve => setTimeout(resolve, ms)
                 );
 
-                while (Array.from(visited)[index] !== undefined) {
+                const setSize = visited.size
+                while (index <= setSize) {
                     await delay(animationSpeed)
                     draw()
                 }

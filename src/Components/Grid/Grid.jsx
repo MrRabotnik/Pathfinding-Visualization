@@ -28,18 +28,26 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
         }
 
         // Generate random walls in the maze
-        for (let col = 1; col < boxHeight - 1; col += 2) {
-            for (let row = 1; row < boxWidth - 1; row += 2) {
+        for (let col = 0; col < boxHeight; col += 2) {
+            for (let row = 0; row < boxWidth; row += 2) {
                 maze[col][row] = 1; // Set the cell as a wall
 
                 // Randomly break walls to create passages
-                if (col > 1 && Math.random() < 0.5) {
+                if (col > 1 && Math.random() < 0.4) {
                     maze[col - 1][row] = 1; // Break the wall above
                 }
 
-                if (row < boxWidth - 2 && Math.random() < 0.5) {
+                if (row < boxWidth - 1 && Math.random() < 0.4) {
                     maze[col][row + 1] = 1; // Break the wall to the right
                 }
+
+                // if (row > 2 && Math.random() < 0.5) {
+                //     maze[col][row - 1] = 1; // Break the wall to the left
+                // }
+
+                // if (col < boxHeight - 1 && Math.random() < 0.5) {
+                //     maze[col + 1][row] = 1; // Break the wall under
+                // }
             }
         }
 
