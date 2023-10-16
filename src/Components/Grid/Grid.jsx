@@ -4,8 +4,8 @@ import panda from "../../assets/panda.png"
 import bamboo from "../../assets/bamboo.png"
 
 function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, setGridItems, visualize }) {
-    const [boxWidth, setBoxWidth] = useState(10)
-    const [boxHeight, setBoxHeight] = useState(5)
+    const [boxWidth, setBoxWidth] = useState(30)
+    const [boxHeight, setBoxHeight] = useState(15)
     const [startNodePos, setStartNodePos] = useState(null)
     const [endNodePos, setEndNodePos] = useState(null)
     const [startPickedUp, setStartPickedUp] = useState(false)

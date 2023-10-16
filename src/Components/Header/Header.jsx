@@ -14,7 +14,7 @@ function Header({ changeRange, changeSpeed, changeAlgorithm, clearWalls, visuali
         <option value="Breadth">Breadth-First Search</option>
         <option value="Depth">Depth-First Search</option>
       </select>
-      <select className="sizeSelect" name="Size" onChange={(e) => changeRange(e.target.value)} defaultValue={"50"}>
+      <select className="sizeSelect" name="Size" onChange={(e) => changeRange(e.target.value)} defaultValue={"450"}>
         <option value="50">10x5</option>
         <option value="450">30x15</option>
         <option value="1250">50x25</option>

@@ -2,9 +2,15 @@ import { useCallback, useState } from "react";
 import Grid from "./Components/Grid/Grid";
 import Header from "./Components/Header/Header";
 import Graph from "./algorithms/dijkstras";
+// import AStar from "./algorithms/AStarSearch";
+// import Greedy from "./algorithms/greedy";
+// import Convergent from "./algorithms/convergent";
+// import Bidirectional from "./algorithms/bidirectional";
+// import Breadth from "./algorithms/breadth";
+// import Depth from "./algorithms/depth";
 
 function App() {
-    const [rangeVal, setRangeVal] = useState(50)
+    const [rangeVal, setRangeVal] = useState(450)
     const [animationSpeed, setAnimationSpeed] = useState(0)
     const [generate, setGenerate] = useState(0)
     const [algorithm, setAlgorithm] = useState("Dij")
@@ -17,10 +23,10 @@ function App() {
     }
 
     const changeSpeed = (val) => {
-        if(val === "fast") setAnimationSpeed(0)
-        else if(val === "middle") setAnimationSpeed(50)
-        else if(val === "slow") setAnimationSpeed(100)
-        
+        if (val === "fast") setAnimationSpeed(0)
+        else if (val === "middle") setAnimationSpeed(50)
+        else if (val === "slow") setAnimationSpeed(100)
+
     }
 
     const changeAlgorithm = (val) => {
@@ -68,14 +74,14 @@ function App() {
 
                 let index = 0
                 const arr = []
+                let array = gridItems
 
                 const draw = async () => {
                     arr.push(Array.from(visited)[index])
                     setVisualizing(true)
-                    setGridItems(gridItems.map(item => {
+                    array = array.map(item => {
                         if (arr.includes("" + item.id)) {
                             if (path.includes(item.id)) {
-
                                 return {
                                     ...item,
                                     "path": true,
@@ -93,8 +99,9 @@ function App() {
                             "path": false,
                             "visited": false
                         }
-                    }))
+                    })
                     index++
+                    setGridItems(array)
                 }
 
                 const delay = ms => new Promise(
