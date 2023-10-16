@@ -9,6 +9,7 @@ function App() {
     const [algorithm, setAlgorithm] = useState("Dij")
     const [djakstrasStartingEndingNode, setDjakstrasStartingEndingNode] = useState([])
     const [gridItems, setGridItems] = useState([])
+    const [visualizing, setVisualizing] = useState(false)
 
     const changeRange = (val) => {
         setRangeVal(val)
@@ -30,6 +31,7 @@ function App() {
     }
 
     const visualize = useCallback(() => {
+        if (visualizing) return
         switch (algorithm) {
             case "Dij":
                 let g = new Graph();
@@ -56,27 +58,41 @@ function App() {
                 const path = g.drawShortestPath()
                 const visited = g.drawVisitedNodes()
 
-                setGridItems(gridItems.map(item => {
-                    if(visited.has("" + item.id)){
-                        if (path.includes(item.id)) {
+                let index = 0
+                const arr = []
+
+                const x = setInterval(() => {
+                    arr.push(Array.from(visited)[index])
+                    setVisualizing(true)
+                    setGridItems(gridItems.map(item => {
+                        if (arr.includes("" + item.id)) {
+                            if (path.includes(item.id)) {
+
+                                return {
+                                    ...item,
+                                    "path": true,
+                                    "visited": true
+                                }
+                            }
                             return {
                                 ...item,
-                                "path": true,
-                                "visited": true
+                                "visited": true,
+                                "path": false
                             }
                         }
                         return {
                             ...item,
-                            "visited": true,
-                            "path": false
+                            "path": false,
+                            "visited": false
                         }
+                    }))
+                    index++
+
+                    if (Array.from(visited)[index] === undefined) {
+                        clearInterval(x)
+                        setVisualizing(false)
                     }
-                    return {
-                        ...item,
-                        "path": false,
-                        "visited": false
-                    }
-                }))
+                }, 100)
 
                 break;
 
@@ -113,7 +129,7 @@ function App() {
                 break;
         }
 
-    }, [gridItems, algorithm, rangeVal, djakstrasStartingEndingNode])
+    }, [gridItems, algorithm, rangeVal, djakstrasStartingEndingNode, visualizing])
 
     const generateNewGridWithMaze = () => {
         setGenerate(generate + 1)

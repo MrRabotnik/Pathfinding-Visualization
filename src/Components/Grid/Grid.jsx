@@ -76,7 +76,6 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
         const arr = []
         const maze = generateMaze()
         const pos = randomStartingPos(maze)
-        // const walls = [6, 11, 12, 13, 16, 18, 21, 23, 26, 28, 31, 33, 36, 37, 38, 43]
         setBoxWidth(Math.floor(Math.sqrt(rangeVal / 2)) * 2)
         setBoxHeight(Math.floor(Math.sqrt(rangeVal / 2)))
 
