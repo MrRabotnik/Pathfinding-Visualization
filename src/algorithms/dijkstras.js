@@ -49,7 +49,7 @@ export default class Graph {
         let currVertex = this.vertexWithMinDistance(this.distances, this.visited);
 
         while (currVertex !== null) {
-            if (currVertex === end) break
+            if (+currVertex === end) break
             let distance = this.distances[currVertex],
                 neighbors = this.adjacencyList[currVertex];
             for (let neighbor in neighbors) {
@@ -76,6 +76,8 @@ export default class Graph {
         // console.log(this.adjacencyList);
     }
 
+    
+
     drawShortestPath = () => {
         let currentNode = this.end
         while (this.parents[currentNode] !== null) {
@@ -84,5 +86,9 @@ export default class Graph {
         }
         this.path.push(+currentNode)
         return this.path
+    }
+
+    drawVisitedNodes = () => {
+        return this.visited
     }
 }

@@ -16,11 +16,9 @@ function Header({ changeRange, changeAlgorithm, clearWalls, visualize, generateN
       </select>
       <select className="sizeSelect" name="Size" onChange={(e) => changeRange(e.target.value)} defaultValue={"50"}>
         <option value="50">10x5</option>
-        <option value="200">20x10</option>
         <option value="450">30x15</option>
-        <option value="800">40x20</option>
         <option value="1250">50x25</option>
-        <option value="1800">60x30</option>
+        <option value="2450">70x35</option>
       </select>
       {/* <input type="range" min={18} max={750} step={20}  /> */}
       <button className="visualizeBtn" onClick={visualize}>Visualize</button>

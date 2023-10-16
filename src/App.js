@@ -23,7 +23,8 @@ function App() {
             return {
                 ...item,
                 "wall": false,
-                "path": false
+                "path": false,
+                "visited": false
             }
         }))
     }
@@ -53,20 +54,29 @@ function App() {
                 }
                 g.dijkstrasAlgorithm(djakstrasStartingEndingNode);
                 const path = g.drawShortestPath()
+                const visited = g.drawVisitedNodes()
 
-                const arr = gridItems.map(item => {
-                    if (path.includes(item.id)) {
+                setGridItems(gridItems.map(item => {
+                    if(visited.has("" + item.id)){
+                        if (path.includes(item.id)) {
+                            return {
+                                ...item,
+                                "path": true,
+                                "visited": true
+                            }
+                        }
                         return {
                             ...item,
-                            "path": true
+                            "visited": true
                         }
                     }
                     return {
                         ...item,
-                        "path": false
+                        "path": false,
+                        "visited": false
                     }
-                })
-                setGridItems(arr)
+                }))
+
                 break;
 
             case "A*":

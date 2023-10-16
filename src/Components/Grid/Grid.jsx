@@ -88,7 +88,8 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
                 "start": i === pos[0] ? true : false,
                 "end": i === pos[1] ? true : false,
                 "wall": maze.includes(i) ? true : false,
-                "path": false
+                "path": false,
+                "visited": false
             })
         }
         setGridItems(arr)
@@ -154,6 +155,7 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
         }
         let changeStartPos = startNodePos
         let changeEndPos = endNodePos
+
         if (startPickedUp) {
             const arr = gridItems.map(item => {
                 if (!item.end && item.id === box.id) {
@@ -191,7 +193,6 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
         setEndPickedUp(false)
         setMovingNodeImage(null)
         setDjakstrasStartingEndingNode([changeStartPos, changeEndPos])
-        visualize()
     }
 
     const checkIfThereIsAWallOnMouseDown = (startPickedUp, endPickedUp) => {
@@ -265,7 +266,7 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
                             width: `${100 / boxWidth}%`,
                             height: `${100 / boxHeight}%`,
                             backgroundImage: `URL(${box.start && !startPickedUp ? panda : box.end && !endPickedUp ? bamboo : ""})`,
-                            backgroundColor: box.wall ? "black" : box.end || box.path ? "green" : "transparent",
+                            backgroundColor: box.wall ? "black" : box.end || box.path ? "green" : box.visited ? "wheat" : "transparent",
                             border: `1px solid ${box.wall ? "transparent" : "black"}`,
                         }}
                         onMouseDown={(e) => { mouseDownOnBox(e, box) }}
