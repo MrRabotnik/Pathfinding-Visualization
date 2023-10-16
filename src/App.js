@@ -67,7 +67,8 @@ function App() {
                         }
                         return {
                             ...item,
-                            "visited": true
+                            "visited": true,
+                            "path": false
                         }
                     }
                     return {
