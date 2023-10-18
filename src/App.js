@@ -73,7 +73,7 @@ function App() {
                 const visited = g.drawVisitedNodes()
 
                 let index = 0
-                const arr = []
+                // const arr = []
                 let array = gridItems
                 let tmpVisited = visited.values()
 
