@@ -30,24 +30,16 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
         // Generate random walls in the maze
         for (let col = boxHeight < 10 ? 1 : 0; col < (boxHeight < 10 ? boxHeight - 1 : boxHeight); col += 2) {
             for (let row = boxHeight < 10 ? 1 : 0; row < (boxHeight < 10 ? boxWidth - 1 : boxWidth); row += 2) {
-                maze[col][row] = 1; // Set the cell as a wall
+                maze[col][row] = 1;
 
-                // Randomly break walls to create passages
                 if (col > 1 && Math.random() < 0.4) {
-                    maze[col - 1][row] = 1; // Break the wall above
+                    maze[col - 1][row] = 1;
                 }
 
                 if (row < boxWidth - 1 && Math.random() < 0.4) {
-                    maze[col][row + 1] = 1; // Break the wall to the right
+                    maze[col][row + 1] = 1;
                 }
 
-                // if (row > 2 && Math.random() < 0.5) {
-                //     maze[col][row - 1] = 1; // Break the wall to the left
-                // }
-
-                // if (col < boxHeight - 1 && Math.random() < 0.5) {
-                //     maze[col + 1][row] = 1; // Break the wall under
-                // }
             }
         }
 
@@ -79,7 +71,6 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
         return [startingPos, endingPos]
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const initGrid = () => {
         const arr = []
         const maze = generateMaze()
@@ -170,15 +161,21 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
                     changeStartPos = item.id
                     return {
                         ...item,
-                        "start": true
+                        "start": true,
+                        "path": false,
+                        "visited": false
                     }
                 }
                 return {
                     ...item,
-                    "start": false
+                    "start": false,
+                    "path": false,
+                    "visited": false
                 }
             })
             setGridItems(arr)
+            visualize(arr, [changeStartPos, changeEndPos])
+
         } else if (endPickedUp) {
             const arr = gridItems.map(item => {
                 if (!item.start && item.id === box.id) {
@@ -186,15 +183,20 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
                     changeEndPos = item.id
                     return {
                         ...item,
-                        "end": true
+                        "end": true,
+                        "path": false,
+                        "visited": false
                     }
                 }
                 return {
                     ...item,
-                    "end": false
+                    "end": false,
+                    "path": false,
+                    "visited": false
                 }
             })
             setGridItems(arr)
+            visualize(arr, [changeStartPos, changeEndPos])
         }
         setStartPickedUp(false)
         setEndPickedUp(false)

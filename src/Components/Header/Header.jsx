@@ -20,10 +20,10 @@ function Header({ changeRange, changeSpeed, changeAlgorithm, clearWalls, visuali
         <option value="1250">50x25</option>
         <option value="2450">70x35</option>
       </select>
-      <button className="visualizeBtn" onClick={visualize}>Visualize</button>
+      <button className="visualizeBtn" onClick={() => { visualize(undefined) }}>Visualize</button>
       <button className="generateBtn" onClick={generateNewGridWithMaze}>Generate</button>
       <button className="clearBtn" onClick={clearWalls}>Clear</button>
-      <select name="Speed" className="speedSelect" defaultValue={"fast"} onChange={(e) => {changeSpeed(e.target.value)}}>
+      <select name="Speed" className="speedSelect" defaultValue={"fast"} onChange={(e) => { changeSpeed(e.target.value) }}>
         <option disabled>Speed</option>
         <option value="fast">Fast</option>
         <option value="middle">Middle</option>

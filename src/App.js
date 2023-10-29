@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import Grid from "./Components/Grid/Grid";
 import Header from "./Components/Header/Header";
 import Graph from "./algorithms/dijkstras";
@@ -44,75 +44,52 @@ function App() {
         }))
     }
 
-    const visualize = useCallback(async () => {
+    const clearVisualization = () => {
+        return gridItems.map(item => {
+            return {
+                ...item,
+                "path": false,
+                "visited": false
+            }
+        })
+    }
+
+    const visualize = async (arr, startEndArr = djakstrasStartingEndingNode) => {
         if (visualizing) return
+
+        const delay = ms => new Promise(
+            resolve => setTimeout(resolve, ms)
+        );
+
         switch (algorithm) {
             case "Dij":
+                let array = arr ? arr : clearVisualization()
                 let g = new Graph();
                 const weight = 1
                 const width = Math.floor(Math.sqrt(rangeVal / 2)) * 2
                 for (let i = 0; i < rangeVal; i++) {
-                    if (!gridItems[i].wall) {
+                    if (!array[i].wall) {
                         g.addVertex(i)
-                        if (!gridItems[i + 1]?.wall && i + 1 < rangeVal && (i + 1) % width !== 0) {
+                        if (!array[i + 1]?.wall && i + 1 < rangeVal && (i + 1) % width !== 0) {
                             g.addEdge(i, i + 1, weight);
                         }
-                        if (!gridItems[i + width]?.wall && i + width < rangeVal) {
+                        if (!array[i + width]?.wall && i + width < rangeVal) {
                             g.addEdge(i, i + width, weight);
                         }
-                        if (!gridItems[i - 1]?.wall && i - 1 >= 0 && (i - 1) % width !== width - 1) {
+                        if (!array[i - 1]?.wall && i - 1 >= 0 && (i - 1) % width !== width - 1) {
                             g.addEdge(i, i - 1, weight);
                         }
-                        if (!gridItems[i - width]?.wall && i - width >= 0) {
+                        if (!array[i - width]?.wall && i - width >= 0) {
                             g.addEdge(i, i - width, weight);
                         }
                     }
                 }
-                g.dijkstrasAlgorithm(djakstrasStartingEndingNode);
+                g.dijkstrasAlgorithm(startEndArr);
                 const path = g.drawShortestPath()
                 const visited = g.drawVisitedNodes()
 
-                let index = 0
-                // const arr = []
-                let array = gridItems
                 let tmpVisited = visited.values()
-
-                // const draw = async () => {
-                //     arr.push(Array.from(visited)[index])
-                //     setVisualizing(true)
-                //     array = array.map(item => {
-                //         if (arr.includes("" + item.id)) {
-                //             if (path.includes(item.id)) {
-                //                 return {
-                //                     ...item,
-                //                     "path": true,
-                //                     "visited": true
-                //                 }
-                //             }
-                //             return {
-                //                 ...item,
-                //                 "visited": true,
-                //                 "path": false
-                //             }
-                //         }
-                //         return {
-                //             ...item,
-                //             "path": false,
-                //             "visited": false
-                //         }
-                //     })
-                //     index++
-                //     setGridItems(array)
-                // }
-
-                // const delay = ms => new Promise(
-                //     resolve => setTimeout(resolve, ms)
-                // );
-
-                // while (Array.from(visited)[index] !== undefined) {
-                //     await delay(animationSpeed)
-                //     draw()
-                // }
+                let index = 0
 
                 const draw = async () => {
                     setVisualizing(true)
@@ -140,10 +117,6 @@ function App() {
                     setGridItems(array)
                 }
 
-                const delay = ms => new Promise(
-                    resolve => setTimeout(resolve, ms)
-                );
-
                 const setSize = visited.size
                 while (index <= setSize) {
                     await delay(animationSpeed)
@@ -154,39 +127,38 @@ function App() {
                 break;
 
             case "A*":
-                Graph.dijkstrasAlgorithm("A");
+                // Graph.dijkstrasAlgorithm("A");
                 break;
 
             case "Greedy":
-                Graph.dijkstrasAlgorithm("A");
+                // Graph.dijkstrasAlgorithm("A");
                 break;
 
             case "Swarm":
-                Graph.dijkstrasAlgorithm("A");
+                // Graph.dijkstrasAlgorithm("A");
                 break;
 
             case "Convergent":
-                Graph.dijkstrasAlgorithm("A");
+                // Graph.dijkstrasAlgorithm("A");
                 break;
 
             case "Bidirectional":
-                Graph.dijkstrasAlgorithm("A");
+                // Graph.dijkstrasAlgorithm("A");
                 break;
 
             case "Breadth":
-                Graph.dijkstrasAlgorithm("A");
+                // Graph.dijkstrasAlgorithm("A");
                 break;
 
             case "Depth":
-                Graph.dijkstrasAlgorithm("A");
+                // Graph.dijkstrasAlgorithm("A");
                 break;
 
             default:
                 Graph.dijkstrasAlgorithm("A");
                 break;
         }
-
-    }, [gridItems, algorithm, rangeVal, djakstrasStartingEndingNode, visualizing, animationSpeed])
+    }
 
     const generateNewGridWithMaze = () => {
         setGenerate(generate + 1)
