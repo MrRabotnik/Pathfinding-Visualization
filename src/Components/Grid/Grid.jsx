@@ -7,8 +7,8 @@ function Grid({ rangeVal, generate, setDjakstrasStartingEndingNode, gridItems, s
     const WW = window.innerWidth;
     const WH = window.innerHeight;
 
-    const [boxWidth, setBoxWidth] = useState(WW > WH ? 10 : 5);
-    const [boxHeight, setBoxHeight] = useState(WW > WH ? 5 : 10);
+    const [boxWidth, setBoxWidth] = useState(WW > WH ? 30 : 15);
+    const [boxHeight, setBoxHeight] = useState(WW > WH ? 15 : 30);
     const [startNodePos, setStartNodePos] = useState(null);
     const [endNodePos, setEndNodePos] = useState(null);
     const [startPickedUp, setStartPickedUp] = useState(false);

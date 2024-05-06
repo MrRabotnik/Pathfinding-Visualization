@@ -10,7 +10,7 @@ import AStarGraph from "./algorithms/AStarSearch";
 // import Depth from "./algorithms/depth";
 
 function App() {
-    const [rangeVal, setRangeVal] = useState(50);
+    const [rangeVal, setRangeVal] = useState(450);
     const [animationSpeed, setAnimationSpeed] = useState(4);
     const [generate, setGenerate] = useState(0);
     const [algorithm, setAlgorithm] = useState("Dij");

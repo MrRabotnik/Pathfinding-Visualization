@@ -28,7 +28,7 @@ function Header({ changeRange, changeSpeed, changeAlgorithm, clearWalls, visuali
                 className="sizeSelect"
                 name="Size"
                 onChange={(e) => changeRange(e.target.value)}
-                defaultValue={"50"}
+                defaultValue={"450"}
             >
                 <option value="50">10x5</option>
                 <option value="450">30x15</option>
