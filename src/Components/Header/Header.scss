@@ -1,43 +1,83 @@
 .header {
-  height: 10%;
-  background-color: #002c3e;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+    height: 10%;
+    background-color: #002c3e;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .algorithmsSelect {
+        padding: 0.5vw 1vw;
+        width: 10%;
+    }
+
+    .sizeSelect {
+        padding: 0.5vw 1vw;
+    }
+
+    .visualizeBtn {
+        padding: 0.5vw 1vw;
+        font-size: 1.5vw;
+        background-color: green;
+        color: white;
+
+        &:hover {
+            background-color: darkgreen;
+        }
+    }
+
+    .generateBtn {
+        padding: 0.5vw 1vw;
+        font-size: 1.5vw;
+        background-color: green;
+        color: white;
+    }
+
+    .clearBtn {
+        padding: 0.5vw 1vw;
+    }
+
+    .speedSelect {
+        padding: 0.5vw 1vw;
+    }
 }
 
-.algorithmsSelect{
-  padding: 0.5vw 1vw;
-  width: 10%;
+@media only screen and (max-width: 769px) {
+    .header {
+        height: 18%;
+        padding: 10px;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+
+        .algorithmsSelect {
+            padding: 5px 10px;
+            width: auto;
+            margin: 5px 10px;
+        }
+
+        .sizeSelect {
+            margin: 5px 10px;
+        }
+
+        .visualizeBtn {
+            padding: 5px 10px;
+            font-size: 16px;
+            margin: 5px 10px;
+        }
+
+        .generateBtn {
+            padding: 5px 10px;
+            font-size: 16px;
+            margin: 5px 10px;
+        }
+
+        .clearBtn {
+            padding: 5px 10px;
+            margin: 5px 10px;
+        }
+
+        .speedSelect {
+            padding: 5px 10px;
+            margin: 5px 10px;
+        }
+    }
 }
-
-.sizeSelect{
-  padding: 0.5vw 1vw;
-}
-
-.visualizeBtn{
-  padding: 0.5vw 1vw;
-  font-size: 1.5vw;
-  background-color: green;
-  color: white;
-
-  &:hover{
-    background-color: darkgreen;
-  }
-}
-
-.generateBtn{
-  padding: 0.5vw 1vw;
-  font-size: 1.5vw;
-  background-color: green;
-  color: white;
-}
-
-.clearBtn{
-  padding: 0.5vw 1vw;
-}
-
-.speedSelect {
-  padding: 0.5vw 1vw;
-}
-

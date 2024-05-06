@@ -5,8 +5,8 @@ export default class Graph {
         this.parents = {};
         this.distances = {};
         this.visited = new Set();
-        this.path = []
-        this.end = null
+        this.path = [];
+        this.end = null;
     }
 
     addVertex(vertex) {
@@ -36,7 +36,7 @@ export default class Graph {
     }
 
     dijkstrasAlgorithm = ([start, end]) => {
-        this.end = end
+        this.end = end;
         for (let i = 0; i < this.vertices.length; i++) {
             if (this.vertices[i] === start) {
                 this.distances[start] = 0;
@@ -49,7 +49,7 @@ export default class Graph {
         let currVertex = this.vertexWithMinDistance(this.distances, this.visited);
 
         while (currVertex !== null) {
-            if (+currVertex === end) break
+            if (+currVertex === end) break;
             let distance = this.distances[currVertex],
                 neighbors = this.adjacencyList[currVertex];
             for (let neighbor in neighbors) {
@@ -74,21 +74,19 @@ export default class Graph {
 
         // console.log("Adjacent List")
         // console.log(this.adjacencyList);
-    }
-
-    
+    };
 
     drawShortestPath = () => {
-        let currentNode = this.end
+        let currentNode = this.end;
         while (this.parents[currentNode] !== null) {
-            this.path.push(+currentNode)
-            currentNode = this.parents[currentNode]
+            this.path.push(+currentNode);
+            currentNode = this.parents[currentNode];
         }
-        this.path.push(+currentNode)
-        return this.path
-    }
+        this.path.push(+currentNode);
+        return this.path;
+    };
 
     drawVisitedNodes = () => {
-        return this.visited
-    }
+        return this.visited;
+    };
 }

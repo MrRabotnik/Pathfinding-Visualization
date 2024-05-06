@@ -1,34 +1,40 @@
 .grid {
-  height: 90%;
-  background-color: #78bcc4;
-  display: flex;
-  flex-wrap: wrap;
+    height: 90%;
+    background-color: #78bcc4;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .gridItem {
-  box-sizing: border-box;
-  background-size: 100% 100%;
-  transition: .2s;
-  // border-radius: 50%;
+    box-sizing: border-box;
+    background-size: 100% 100%;
+    transition: 0.2s;
+    // border-radius: 50%;
 }
 
 .pickedUpItem {
-  width: 8%;
-  height: 15%;
-  visibility: hidden;
-  position: absolute;
-  transform: translate(-50%, 30%);
-  background-size: 100% 100%;
+    width: 8%;
+    height: 15%;
+    visibility: hidden;
+    position: absolute;
+    transform: translate(-50%, 30%);
+    background-size: 100% 100%;
 }
 
 @keyframes pickedUpNode {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 769px) {
+    .grid {
+        height: 82%;
+    }
 }
