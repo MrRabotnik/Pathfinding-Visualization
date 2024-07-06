@@ -62,18 +62,6 @@ export default class Graph {
             this.visited.add(currVertex);
             currVertex = this.vertexWithMinDistance(this.distances, this.visited);
         }
-
-        // console.log("Parents")
-        // console.log(this.parents);
-
-        // console.log("Distances")
-        // console.log(this.distances);
-
-        // console.log("Visited")
-        // console.log(this.visited);
-
-        // console.log("Adjacent List")
-        // console.log(this.adjacencyList);
     };
 
     drawShortestPath = () => {

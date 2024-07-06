@@ -2,7 +2,7 @@ import { useState } from "react";
 import Grid from "./Components/Grid/Grid";
 import Header from "./Components/Header/Header";
 import Graph from "./algorithms/dijkstras";
-import AStarGraph from "./algorithms/AStarSearch";
+import AStar from "./algorithms/AStarSearch";
 // import Greedy from "./algorithms/greedy";
 // import Convergent from "./algorithms/convergent";
 // import Bidirectional from "./algorithms/bidirectional";
@@ -132,11 +132,12 @@ function App() {
             setVisualizing(false);
         } else if (algorithm === "A*") {
             let array = arr ? arr : clearVisualization();
+
             const width =
                 window.innerWidth > window.innerHeight
                     ? Math.floor(Math.sqrt(rangeVal / 2)) * 2
                     : Math.floor(Math.sqrt(rangeVal / 2));
-            let g = new AStarGraph();
+            let g = new AStar();
             const weight = 1;
             for (let i = 0; i < rangeVal; i++) {
                 if (!array[i].wall) {
@@ -155,7 +156,7 @@ function App() {
                     }
                 }
             }
-            g.dijkstrasAlgorithm(startEndArr);
+            g.aStarAlgorithm(startEndArr, width);
             const path = g.drawShortestPath();
             const visited = g.drawVisitedNodes();
 
@@ -164,7 +165,7 @@ function App() {
 
             const draw = async () => {
                 setVisualizing(true);
-                const currentNodeVisited = Number(tmpVisited.next().value); // id of current visited node
+                const currentNodeVisited = Number(tmpVisited.next().value);
 
                 array = array.map((item) => {
                     if (currentNodeVisited === item.id) {
