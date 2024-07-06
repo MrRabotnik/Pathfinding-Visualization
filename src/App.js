@@ -6,7 +6,7 @@ import AStar from "./algorithms/AStarSearch";
 import GreedyBestFirst from "./algorithms/greedy";
 import AntColonyOptimization from "./algorithms/swarm";
 import BidirectionalSearch from "./algorithms/bidirectional";
-import BreadthFirstSearch from "./algorithms/breadth";
+// import BreadthFirstSearch from "./algorithms/breadth";
 import DepthFirstSearch from "./algorithms/depth";
 import BellmanFord from "./algorithms/bellmanFord";
 import JPS from "./algorithms/jumpPoint";
@@ -557,7 +557,7 @@ function App() {
             // Perform Bellman-Ford algorithm
             try {
                 const startNode = startEndArr[0];
-                const { distances, parents } = g.bellmanFord(startNode);
+                const { distances } = g.bellmanFord(startNode);
 
                 // Extract visited nodes
                 const visited = new Set(Object.keys(distances));

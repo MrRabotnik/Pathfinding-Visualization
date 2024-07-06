@@ -44,7 +44,6 @@ export default class JPS {
     }
 
     identifySuccessors(node, width) {
-        const [x, y] = node.split(",").map(Number);
         const currentNeighbors = [
             [0, 1],
             [1, 0],

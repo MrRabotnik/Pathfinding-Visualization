@@ -74,7 +74,7 @@ export default class AntColonyOptimization {
     }
 
     acoAlgorithm(startEndArr) {
-        let [start, end] = startEndArr;
+        let [end] = startEndArr;
         this.end = end;
         const maxIterations = 100; // Maximum number of iterations
         let iteration = 0;
