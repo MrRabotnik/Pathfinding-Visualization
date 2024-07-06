@@ -17,12 +17,15 @@ function Header({ changeRange, changeSpeed, changeAlgorithm, clearWalls, visuali
                 </option>
                 <option value="Dij">Dijkstra’s Algorithm</option>
                 <option value="A*">A* Search</option>
-                <option value="Greedy">Greedy Best-First Search</option>
-                <option value="Swarm">Swarm Algorithm</option>
-                <option value="Convergent">Convergent Swarm Algorithm</option>
+                {/* <option value="Greedy">Greedy Best-First Search</option> */}
+                {/* <option value="Swarm">Swarm Algorithm</option> */}
                 <option value="Bidirectional">Bidirectional Swarm Algorithm</option>
-                <option value="Breadth">Breadth-First Search</option>
-                <option value="Depth">Depth-First Search</option>
+                {/* <option value="Breadth">Breadth-First Search</option> */}
+                {/* <option value="Depth">Depth-First Search</option> */}
+                {/* <option value="Bellman">Bellman-Ford Search</option> */}
+                <option value="JumpPoint">Jump-Point Search</option>
+                {/* <option value="Floyd">Floyd-Warshall Search</option> */}
+                {/* <option value="Theta">Theta Star Search</option> */}
             </select>
             <select
                 className="sizeSelect"
